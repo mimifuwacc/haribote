@@ -29,10 +29,18 @@ export default function App() {
         <h1>haribote + React Router</h1>
         <nav>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/articles/1">Article 1</Link></li>
-            <li><Link to="/articles/2">Article 2</Link></li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/articles/1">Article 1</Link>
+            </li>
+            <li>
+              <Link to="/articles/2">Article 2</Link>
+            </li>
           </ul>
         </nav>
         <Routes>

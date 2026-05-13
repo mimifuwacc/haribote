@@ -3,10 +3,7 @@ import type { MetaSSROptions } from "./types";
 
 const META_ENDPOINT = "/__meta";
 
-export function createHandler(
-  options: MetaSSROptions,
-  getHtml: () => Promise<string>,
-) {
+export function createHandler(options: MetaSSROptions, getHtml: () => Promise<string>) {
   return async (request: Request): Promise<Response> => {
     const url = new URL(request.url);
 

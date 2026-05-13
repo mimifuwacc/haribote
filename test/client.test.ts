@@ -103,7 +103,12 @@ describe("matchMeta", () => {
   const options = {
     routes: [
       { pattern: "/", meta: { title: "Home" } },
-      { pattern: "/articles/:id", meta: ({ params }: { params: Record<string, string> }) => ({ title: `Article ${params.id}` }) },
+      {
+        pattern: "/articles/:id",
+        meta: ({ params }: { params: Record<string, string> }) => ({
+          title: `Article ${params.id}`,
+        }),
+      },
     ],
   };
 

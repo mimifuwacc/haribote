@@ -77,11 +77,7 @@ describe("createMiddleware", () => {
   it("passes non-HTML requests to next", async () => {
     const middleware = createMiddleware(options, getHtml);
     const next = vi.fn();
-    await middleware(
-      mockReq("/api/data", "application/json"),
-      {} as ServerResponse,
-      next,
-    );
+    await middleware(mockReq("/api/data", "application/json"), {} as ServerResponse, next);
     expect(next).toHaveBeenCalled();
   });
 

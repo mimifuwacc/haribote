@@ -117,16 +117,68 @@ Fetches meta for a given pathname from `/__meta`.
 
 Applies a `MetaData` object to the current document.
 
+### Server
+
+#### `createHandler(options, getHtml)`
+
+Creates a `(Request) => Promise<Response>` handler that injects meta tags into HTML and exposes the `/__meta` endpoint. Works with Node.js `http` and Cloudflare Workers.
+
 ### Production
 
-For production, use `createMiddleware` to inject meta tags in your server:
+#### Node.js
+
+Use `createHandler` to serve your app with meta injection:
 
 ```ts
-import { createMiddleware, defineConfig, route } from "haribote";
+import { createServer } from "node:http";
+import { readFile } from "node:fs/promises";
+import { createHandler } from "haribote";
+import config from "./metadata.config.ts";
 
-const options = defineConfig({ routes: [...] });
+const handle = createHandler(config, () => readFile("dist/index.html", "utf-8"));
 
-app.use(createMiddleware(options, (url) => readFile("dist/index.html", "utf-8")));
+createServer(async (req, res) => {
+  const response = await handle(new Request(new URL(req.url, "http://localhost")));
+  res.statusCode = response.status;
+  for (const [k, v] of response.headers) res.setHeader(k, v);
+  res.end(await response.text());
+}).listen(3000);
+```
+
+For Express/Connect, use `createMiddleware` instead.
+
+#### Cloudflare Workers
+
+```ts
+import { createHandler } from "haribote";
+import config from "./metadata.config";
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (/\.[^./]+$/.test(url.pathname) && !url.pathname.endsWith(".html")) {
+      return env.ASSETS.fetch(request);
+    }
+    return createHandler(config, async () => {
+      const res = await env.ASSETS.fetch(new URL("/index.html", request.url).toString());
+      return res.text();
+    })(request);
+  },
+};
+```
+
+`wrangler.jsonc`:
+
+```jsonc
+{
+  "main": "worker.ts",
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+    "run_worker_first": true,
+  },
+}
 ```
 
 ## Examples

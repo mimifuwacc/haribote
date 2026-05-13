@@ -3,7 +3,7 @@ import type { MetaSSROptions } from "./types";
 
 const META_ENDPOINT = "/__meta";
 
-export function createFetchHandler(
+export function createHandler(
   options: MetaSSROptions,
   getHtml: () => Promise<string>,
 ) {

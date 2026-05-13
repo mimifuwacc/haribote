@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createFetchHandler } from "haribote";
+import { createHandler } from "haribote";
 import config from "./metadata.config.ts";
 
 const dist = join(fileURLToPath(new URL(".", import.meta.url)), "dist");
@@ -15,7 +15,7 @@ const MIME: Record<string, string> = {
   ".ico": "image/x-icon",
 };
 
-const handle = createFetchHandler(config, () => readFile(join(dist, "index.html"), "utf-8"));
+const handle = createHandler(config, () => readFile(join(dist, "index.html"), "utf-8"));
 
 createServer(async (req, res) => {
   const url = new URL(req.url ?? "/", "http://localhost");

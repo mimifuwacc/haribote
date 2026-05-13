@@ -1,4 +1,4 @@
-import { createFetchHandler } from "haribote";
+import { createHandler } from "haribote";
 import config from "./metadata.config";
 
 type Env = {
@@ -13,11 +13,9 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
-    const handle = createFetchHandler(config, async () => {
+    return createHandler(config, async () => {
       const res = await env.ASSETS.fetch(new URL("/index.html", request.url).toString());
       return res.text();
-    });
-
-    return handle(request);
+    })(request);
   },
 };

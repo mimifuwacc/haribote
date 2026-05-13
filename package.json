@@ -25,6 +25,7 @@
   "bugs": {
     "url": "https://github.com/mimifuwacc/haribote/issues"
   },
+  "packageManager": "pnpm@10.33.2",
   "engines": {
     "node": ">=22"
   },

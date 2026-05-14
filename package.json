@@ -1,6 +1,5 @@
 {
   "name": "haribote",
-  "version": "0.1.0",
   "description": "Vite plugin that SSRs only meta tags, leaving the rest as CSR",
   "keywords": [
     "vite",

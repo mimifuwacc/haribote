@@ -61,9 +61,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
-  "dependencies": {
-    "path-to-regexp": "^8.2.0"
-  },
   "peerDependencies": {
     "vite": ">=5.0.0"
   },

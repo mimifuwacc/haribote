@@ -32,8 +32,12 @@ jobs:
           npm pkg set version=$VERSION
           npm pkg set version=$VERSION --prefix packages/create-haribote
 
-      - run: pnpm -r build
+      - run: pnpm build
+      - run: pnpm --filter create-haribote build
 
-      - run: pnpm -r publish --no-git-checks --provenance --access public
+      - run: pnpm publish --no-git-checks --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: pnpm --filter create-haribote publish --no-git-checks --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

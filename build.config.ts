@@ -10,5 +10,5 @@ export default defineBuildConfig({
       target: "node22",
     },
   },
-  externals: ["vite", "path-to-regexp"],
+  externals: ["vite"],
 });

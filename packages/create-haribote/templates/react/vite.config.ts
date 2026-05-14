@@ -4,7 +4,4 @@ import { metaSSR } from "haribote";
 
 export default defineConfig({
   plugins: [react(), metaSSR()],
-  optimizeDeps: {
-    exclude: ["haribote"],
-  },
 });

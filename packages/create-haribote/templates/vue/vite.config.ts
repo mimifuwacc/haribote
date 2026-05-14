@@ -4,7 +4,4 @@ import { metaSSR } from "haribote";
 
 export default defineConfig({
   plugins: [vue(), metaSSR()],
-  optimizeDeps: {
-    exclude: ["haribote"],
-  },
 });

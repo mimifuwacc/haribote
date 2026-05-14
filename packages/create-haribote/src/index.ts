@@ -8,7 +8,7 @@ import {
   statSync,
   writeFileSync,
 } from "node:fs";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const FRAMEWORKS = [
@@ -75,9 +75,9 @@ function applyDeployOverlay(
 async function main() {
   intro("create-haribote");
 
-  let projectName = process.argv[2];
+  let rawName = process.argv[2];
 
-  if (!projectName) {
+  if (!rawName) {
     const result = await text({
       message: "Project name:",
       placeholder: "my-app",
@@ -90,13 +90,15 @@ async function main() {
       cancel("Cancelled");
       process.exit(0);
     }
-    projectName = result;
+    rawName = result;
   }
 
-  const targetDir = join(process.cwd(), projectName);
+  const isCurrentDir = rawName === ".";
+  const targetDir = isCurrentDir ? process.cwd() : join(process.cwd(), rawName);
+  const projectName = isCurrentDir ? basename(process.cwd()) : rawName;
 
-  if (existsSync(targetDir)) {
-    cancel(`Directory "${projectName}" already exists`);
+  if (!isCurrentDir && existsSync(targetDir)) {
+    cancel(`Directory "${rawName}" already exists`);
     process.exit(1);
   }
 
@@ -136,10 +138,10 @@ async function main() {
   s.stop("Project created");
 
   const devCmd = deployTarget === "cf" ? "pnpm dev:cf" : "pnpm dev";
+  const cdCmd = isCurrentDir ? "" : `\n  cd ${rawName}`;
 
   outro(`Done! Get started:
-
-  cd ${projectName}
+${cdCmd}
   pnpm install
   ${devCmd}`);
 }

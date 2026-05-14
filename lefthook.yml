@@ -2,7 +2,7 @@ pre-commit:
   commands:
     format:
       run: pnpm format
-      stage_fixed: true
     lint:
       run: pnpm exec eslint . --fix
-      stage_fixed: true
+    git-update:
+      run: git update-index --again

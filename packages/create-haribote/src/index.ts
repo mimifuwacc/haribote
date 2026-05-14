@@ -1,5 +1,13 @@
 import { intro, outro, text, select, isCancel, cancel, spinner } from "@clack/prompts";
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -28,7 +36,10 @@ function copyDir(src: string, dest: string, projectName: string) {
     if (statSync(srcPath).isDirectory()) {
       copyDir(srcPath, destPath, projectName);
     } else if (FILES_WITH_REPLACEMENTS.has(entry)) {
-      writeFileSync(destPath, readFileSync(srcPath, "utf-8").replace(/__PROJECT_NAME__/g, projectName));
+      writeFileSync(
+        destPath,
+        readFileSync(srcPath, "utf-8").replace(/__PROJECT_NAME__/g, projectName),
+      );
     } else {
       cpSync(srcPath, destPath);
     }
@@ -46,7 +57,10 @@ function applyDeployOverlay(
     if (statSync(srcPath).isDirectory()) continue;
     const destPath = join(targetDir, entry);
     if (FILES_WITH_REPLACEMENTS.has(entry)) {
-      writeFileSync(destPath, readFileSync(srcPath, "utf-8").replace(/__PROJECT_NAME__/g, projectName));
+      writeFileSync(
+        destPath,
+        readFileSync(srcPath, "utf-8").replace(/__PROJECT_NAME__/g, projectName),
+      );
     } else {
       cpSync(srcPath, destPath);
     }
@@ -112,7 +126,12 @@ async function main() {
   const templatesDir = join(fileURLToPath(new URL("..", import.meta.url)), "templates");
 
   copyDir(join(templatesDir, framework), targetDir, projectName);
-  applyDeployOverlay(join(templatesDir, "_deploy", deployTarget), targetDir, framework, projectName);
+  applyDeployOverlay(
+    join(templatesDir, "_deploy", deployTarget),
+    targetDir,
+    framework,
+    projectName,
+  );
 
   s.stop("Project created");
 

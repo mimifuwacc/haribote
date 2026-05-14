@@ -29,8 +29,8 @@ jobs:
       - name: Set version from tag
         run: |
           VERSION=${GITHUB_REF_NAME#v}
-          npm version $VERSION --no-git-tag-version --allow-same-version
-          npm version $VERSION --no-git-tag-version --allow-same-version --prefix packages/create-haribote
+          npm pkg set version=$VERSION
+          npm pkg set version=$VERSION --prefix packages/create-haribote
 
       - run: pnpm -r build
 

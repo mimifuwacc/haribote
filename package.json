@@ -58,7 +58,6 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -75,6 +74,7 @@
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.0.0",
     "jsdom": "^26.1.0",
+    "lefthook": "^2.1.6",
     "prettier": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

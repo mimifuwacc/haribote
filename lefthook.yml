@@ -1,0 +1,8 @@
+pre-commit:
+  commands:
+    format:
+      run: pnpm format
+    lint:
+      run: pnpm exec eslint . --fix
+    git-update:
+      run: git update-index --again
